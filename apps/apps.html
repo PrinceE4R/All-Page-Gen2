@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Bubbles</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .bubble {
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 1;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .bubble:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <script>
+        const websites = [
+            { name: 'Google', url: 'https://www.google.in', icon: './logos/google.svg' },
+            { name: 'YouTube', url: 'https://www.youtube.com', icon: './logos/youtube.svg' },
+            { name: 'Youtube Music', url: 'https://music.youtube.com', icon: './logos/youtubemusic.svg' },
+            { name: 'ChatGPT', url: 'https://www.chatgpt.com', icon: './logos/chatgpt.svg' },
+            { name: 'Google Drive', url: 'https://drive.google.com/', icon: './logos/googledrive.svg' },
+            { name: 'Google Meet', url: 'https://meet.google.com', icon: './logos/googlemeet.svg' },
+            { name: 'Claude', url: 'https://www.claude.ai', icon: './logos/claude.svg' },
+            { name: 'Meta', url: 'https://www.meta.ai', icon: './logos/meta.svg' },
+            { name: 'Mistral', url: 'https://chat.mistral.ai/chat', icon: './logos/mistral.svg' },
+            { name: 'Desmos', url: 'https://www.desmos.com/calculator', icon: './logos/desmos.svg' },
+            { name: 'Physics Wallah', url: 'https://www.pw.live', icon: './logos/pw.svg' },
+            { name: 'Perplexity', url: 'https://www.perplexity.ai', icon: './logos/perplexity.svg' },
+            { name: 'Gmail', url: 'https://mail.google.com/', icon: './logos/googlemail.svg' },
+            { name: 'Bing', url: 'https://www.bing.com', icon: './logos/bing.svg' },
+            { name: 'Duck Duck Go', url: 'https://duckduckgo.com', icon: './logos/duckduckgo.svg' },
+            { name: 'Brave', url: 'https://search.brave.com', icon: './logos/brave.svg' },
+        ];
+
+        function createBubble(website) {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.style.backgroundImage = `url('${website.icon}')`;
+            bubble.title = website.name;
+            bubble.addEventListener('click', () => {
+            window.parent.postMessage({ action: 'navigate', url: website.url }, '*');
+            });
+            return bubble;
+        }
+
+        function positionBubble(bubble) {
+            const maxX = window.innerWidth - 60;
+            const maxY = window.innerHeight - 60;
+            let overlap;
+            do {
+                overlap = false;
+                bubble.style.left = Math.random() * maxX + 'px';
+                bubble.style.top = Math.random() * maxY + 'px';
+                const bubbles = document.getElementsByClassName('bubble');
+                for (let i = 0; i < bubbles.length; i++) {
+                    if (bubbles[i] !== bubble && isOverlapping(bubble, bubbles[i])) {
+                        overlap = true;
+                        break;
+                    }
+                }
+            } while (overlap);
+        }
+
+        function isOverlapping(elem1, elem2) {
+            const rect1 = elem1.getBoundingClientRect();
+            const rect2 = elem2.getBoundingClientRect();
+            return !(rect1.right < rect2.left || 
+                     rect1.left > rect2.right || 
+                     rect1.bottom < rect2.top || 
+                     rect1.top > rect2.bottom);
+        }
+
+        function init() {
+            websites.forEach(website => {
+                const bubble = createBubble(website);
+                document.body.appendChild(bubble);
+                positionBubble(bubble);
+            });
+        }
+
+        window.addEventListener('load', init);
+        window.addEventListener('resize', () => {
+            const bubbles = document.getElementsByClassName('bubble');
+            Array.from(bubbles).forEach(positionBubble);
+        });
+    </script>
+</body>
+</html>

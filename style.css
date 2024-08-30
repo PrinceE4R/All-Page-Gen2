@@ -1,0 +1,197 @@
+:root{
+    --colour1: #dedede;
+    --colour2: #151515;
+}
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: var(--colour2);
+}
+
+.search-bar {
+    border-radius: 0;
+    position: relative;
+    width: 25%;
+    height: 15%;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+    font-family: "Courier New", monospace;
+    outline: none;
+    border-radius: 0;
+    transition: all 0.3s ease;
+    color: var(--colour1);
+    border: 5px solid var(--colour1);
+    background-color: var(--colour2);
+    position: absolute;
+    z-index: 1;
+    text-indent: 25px;
+}
+
+.search-bar:hover {
+    top: calc(30% - 5px);
+    left: calc(50% - 5px);
+}
+
+.search-bar:focus {
+    color: var(--colour2);
+    border: 5px solid var(--colour2);
+    background-color: var(--colour1);
+}
+
+.search-bar::placeholder {
+    color: var(--colour1);
+}
+
+.search-bar-shadow {
+    position: absolute;
+    top: calc(30% + 20px);
+    left: calc(50% + 20px);
+    transform: translate(-50%, -50%);
+    width: 25%;
+    height: 15%;
+    transition: all 0.3s ease-in-out;
+    background-color: black;
+    z-index: 0;
+    border-radius: 0;
+}
+
+.suggestions-container {  
+    font-family: "Courier New", monospace;
+    color: white;
+    background-color: transparent;
+    height: 35%;
+    width: 25%;
+    position: fixed;
+    top: 57.6%;
+    left: 51.3%;
+    transform: translate(-50%, -50%);
+    border-radius: 0;
+    z-index: 1;
+    overflow-y: auto;
+}
+
+.suggestions-container:active {
+    padding-top: 10px; /* Adjust this to match your input height */
+    padding-bottom: 10px;
+  }
+  .suggestions-container::-webkit-scrollbar {
+    display: none; /* Hides scrollbar for WebKit browsers */
+  }
+  .suggestion {
+    padding: 10px 0; /* Adds vertical padding */
+    padding-left: 5px;
+    padding-right: 5px;
+    cursor: pointer; /* Changes cursor to pointer on hover */
+  }
+  
+  .suggestion:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Adds a subtle separator */
+  }
+  
+  .suggestion:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Adds hover effect */
+  }
+  
+  .suggestion.selected {
+    background-color: rgba(255, 255, 255, 0.2); /* Highlights selected suggestion */
+  }
+
+  .drawer {
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 36%;
+    transform: translateX(60%);
+    position: absolute;
+    transition: all 0.4s ease;
+    background-color: transparent; /* Optional: background color for the drawer */
+    z-index: 2;
+}
+
+.triangle {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 50vh solid transparent;
+    border-bottom: 50vh solid transparent;
+    border-right: 30vw solid var(--colour1); /* Width of the triangle */
+    z-index: 2;
+}
+
+.pseudo-triangle {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 49vh solid transparent;
+  border-bottom: 49vh solid transparent;
+  border-right: 29.5vw solid var(--colour2); /* Width of the triangle */
+  z-index: 2;
+}
+
+.triangle-shadow {
+  position: fixed;
+  right: 0;
+  top: calc(50% + 20px);
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 50vh solid transparent;
+  border-bottom: 50vh solid transparent;
+  border-right: 30vw solid black; /* Width of the triangle */
+  z-index: 1;
+}
+
+.drawer-bar {
+  position: absolute; /* Use absolute positioning relative to .drawer */
+  top: 50%; /* Position it at the middle vertically */
+  left: 32%; /* Center horizontally, adjust if needed */
+  transform: translate(-50%, -50%); /* Center both horizontally and vertically */
+  z-index: 4;
+  width: 10px;
+  height: 50px;
+  background-color: var(--colour1);
+}
+
+.pseudo-drawer-bar {
+  position: absolute; /* Use absolute positioning relative to .drawer */
+  top: 50%; /* Position it at the middle vertically */
+  left: 25%; /* Center horizontally, adjust if needed */
+  transform: translate(-50%, -50%); /* Center both horizontally and vertically */
+  z-index: 5;
+  width: 150px;
+  height: 150px;
+  background-color: transparent;
+}
+
+#toggle-switch{
+  position: absolute; /* Use absolute positioning relative to .drawer */
+  top: 50%; /* Position it at the middle vertically */
+  left: 50%; /* Center horizontally, adjust if needed */
+  transform: translate(-50%, -50%); /* Center both horizontally and vertically */
+  z-index: 5;
+  width: 120px;
+  height: 70px;
+}
+
+.drawer-apps {
+  z-index: 5;
+  position: absolute;
+  width: 36%;
+  height: 55%;
+  top: 50%;
+  left: 80%;
+  border-radius: 100px;
+  transform: translate(-50%, -50%);
+}

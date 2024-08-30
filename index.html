@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AllPage</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+        <input 
+        class="search-bar"
+        type="text"
+        placeholder="Search the internet..."
+        />
+        <div class="search-bar-shadow"></div>
+    <div class="suggestions-container"></div>
+    <div class="drawer">
+        <div class="triangle"></div>
+        <div class="pseudo-triangle"></div>
+        <div class="triangle-inner"></div>
+        <div class="triangle-shadow"></div>
+        <div class="pseudo-drawer-bar" onclick="drawDrawer()"></div>
+        <div class="drawer-bar"></div>
+        <iframe id="toggle-switch" src="./switch/switch.html" frameborder="0"></iframe>
+        <div class="drawer-apps">
+            <iframe src="./apps/apps.html" frameborder="0" width="100%" height="100%"></iframe>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
