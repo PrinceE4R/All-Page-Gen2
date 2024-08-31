@@ -142,11 +142,20 @@ document.addEventListener('click', (e) => {
 });
 
 function drawDrawer() {
-    let drawer = document.querySelector('.drawer');
+    let drawer = document.querySelector('.triangular-drawer');
     if (drawer.style.transform === "translateX(60%)") {
         drawer.style.transform = "translateX(0%)";
     } else {
         drawer.style.transform = "translateX(60%)";
+    }
+}
+
+function drawDrawer2() {
+    let drawer2 = document.querySelector('.rectangular-drawer');
+    if (drawer2.style.transform === "translate(0%, 0%)") {
+        drawer2.style.transform = "translate(-85%, 0%)";
+    } else {
+        drawer2.style.transform = "translate(0%, 0%)";
     }
 }
 
@@ -158,12 +167,12 @@ window.addEventListener('message', function(event) {
     if (event.data.checkboxChecked !== undefined) {
         if (event.data.checkboxChecked) {
             // Checkbox is checked (Dark mode)
-            root.style.setProperty('--colour1', '#151515');
+            root.style.setProperty('--colour1', '#1A1A1A');
             root.style.setProperty('--colour2', '#dedede');
         } else {
             // Checkbox is unchecked (Light mode)
             root.style.setProperty('--colour1', '#dedede');
-            root.style.setProperty('--colour2', '#151515');
+            root.style.setProperty('--colour2', '#1A1A1A');
         }
     }
 });
@@ -172,7 +181,7 @@ window.onload = function() {
     iframe.onload = function() {
         iframe.contentWindow.postMessage({
             colour1: '#dedede',
-            colour2: '#151515'
+            colour2: '#1A1A1A'
         }, '*');
     };
 };

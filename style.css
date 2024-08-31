@@ -1,6 +1,6 @@
 :root{
     --colour1: #dedede;
-    --colour2: #151515;
+    --colour2: #1A1A1A;
 }
 html, body {
     height: 100%;
@@ -85,8 +85,8 @@ html, body {
   }
   .suggestion {
     padding: 10px 0; /* Adds vertical padding */
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
     cursor: pointer; /* Changes cursor to pointer on hover */
   }
   
@@ -102,7 +102,7 @@ html, body {
     background-color: rgba(255, 255, 255, 0.2); /* Highlights selected suggestion */
   }
 
-  .drawer {
+  .triangular-drawer {
     right: 0;
     top: 0;
     height: 100%;
@@ -134,16 +134,16 @@ html, body {
   transform: translateY(-50%);
   width: 0;
   height: 0;
-  border-top: 49vh solid transparent;
-  border-bottom: 49vh solid transparent;
-  border-right: 29.5vw solid var(--colour2); /* Width of the triangle */
+  border-top: calc(50vh - 8px) solid transparent;
+  border-bottom: calc(50vh - 8px) solid transparent;
+  border-right: calc(30vw - 9px) solid var(--colour2); /* Width of the triangle */
   z-index: 2;
 }
 
 .triangle-shadow {
   position: fixed;
   right: 0;
-  top: calc(50% + 20px);
+  top: calc(50% + 18px);
   transform: translateY(-50%);
   width: 0;
   height: 0;
@@ -157,7 +157,8 @@ html, body {
   position: absolute; /* Use absolute positioning relative to .drawer */
   top: 50%; /* Position it at the middle vertically */
   left: 32%; /* Center horizontally, adjust if needed */
-  transform: translate(-50%, -50%); /* Center both horizontally and vertically */
+  transform: translate(-50%, -50%);
+  border-radius: 5px; /* Center both horizontally and vertically */
   z-index: 4;
   width: 10px;
   height: 50px;
@@ -178,20 +179,71 @@ html, body {
 #toggle-switch{
   position: absolute; /* Use absolute positioning relative to .drawer */
   top: 50%; /* Position it at the middle vertically */
-  left: 50%; /* Center horizontally, adjust if needed */
+  left: 55%; /* Center horizontally, adjust if needed */
   transform: translate(-50%, -50%); /* Center both horizontally and vertically */
   z-index: 5;
   width: 120px;
   height: 70px;
 }
 
+.rectangular-drawer {
+  left:0;
+  transform: translate(-85%, 0%);
+  transition: all 0.4s ease;
+  width: 450px;
+  height: 100%;
+}
+
+.rectangle{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 2;
+  transition: all 0.4s ease;
+  border-right: 5px solid var(--colour1);
+  background-color: var(--colour2);
+}
+
+.rectangle-shadow {
+  left: 20px;
+  top: 20px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  transition: all 0.4s ease;
+  background-color: black;
+}
+
+.drawer-bar2 {
+  position: absolute; /* Use absolute positioning relative to .drawer */
+  top: 50%; /* Position it at the middle vertically */
+  right: 5%; /* Center horizontally, adjust if needed */
+  transform: translate(-50%, -50%);
+  border-radius: 5px; /* Center both horizontally and vertically */
+  z-index: 4;
+  width: 10px;
+  height: 50px;
+  background-color: var(--colour1);
+}
+
+.pseudo-drawer-bar2 {
+  position: absolute; /* Use absolute positioning relative to .drawer */
+  top: 50%; /* Position it at the middle vertically */
+  right: -10%; /* Center horizontally, adjust if needed */
+  transform: translateY(-50%); /* Center both horizontally and vertically */
+  z-index: 5;
+  width: 100px;
+  height: 150px;
+  background-color: transparent;
+}
+
 .drawer-apps {
   z-index: 5;
   position: absolute;
-  width: 36%;
-  height: 55%;
+  width: 70%;
+  height: 100%;
   top: 50%;
-  left: 80%;
-  border-radius: 100px;
-  transform: translate(-50%, -50%);
+  left: 0;
+  transform: translate(5%, -50%);
 }
