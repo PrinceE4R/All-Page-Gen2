@@ -63,7 +63,7 @@ function hideSuggestions() {
     suggestionsContainer.classList.remove('active');
     setTimeout(() => {
         suggestionsContainer.style.display = 'none';
-    }, 300);
+    }, 100);
     selectedIndex = -1;
 }
 

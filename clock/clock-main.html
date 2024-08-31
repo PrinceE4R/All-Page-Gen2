@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+    <style>
+        html, body {
+            background-color: transparent;
+            margin: 0;
+            padding: 0;
+        }
+        .clock {
+            position: absolute;
+            width: 152px;
+            height: 152px;
+            border-radius: 100%;
+            background-color: black;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .min-hand, .hour-hand {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform-origin: bottom;
+            transform: translateX(-50%) translateY(-100%);
+        }
+        .min-hand {
+            width: 6px;
+            height: 64px;
+            border-radius: 10px;
+            background-color: #6c696e;
+            z-index: 2;
+        }
+        .hour-hand {
+            width: 16px;
+            height: 60px;
+            border-radius: 10px;
+            background-color: #dedede;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock">
+        <div class="min-hand"></div>
+        <div class="hour-hand"></div>
+    </div>
+
+    <script>
+        function setClock() {
+            const now = new Date();
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+            const hours = now.getHours();
+
+            const minuteDegrees = ((minutes / 60) * 360) + ((seconds / 60) * 6);
+            const hourDegrees = ((hours / 12) * 360) + ((minutes / 60) * 30);
+
+            const minHand = document.querySelector('.min-hand');
+            const hourHand = document.querySelector('.hour-hand');
+
+            minHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${minuteDegrees}deg)`;
+            hourHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${hourDegrees}deg)`;
+        }
+
+        setInterval(setClock, 1000);
+
+        // Initialize the clock
+        setClock();
+    </script>
+</body>
+</html>

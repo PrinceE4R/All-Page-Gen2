@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Themed Media Player</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+      :root{
+          --TC-Default: #dedede;
+          --TC-Theme: #dedede;/*#d17ac0 = synthwave pink*/
+          --TC-Default2: black;
+      }
+      html, body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+.music-player {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    /* Remove the margin property */
+}
+    .back-light {
+        background: var(--TC-Default); /* Changed to #dedede */
+        border-radius: 20px;
+        width: 141.42px;
+        height: 141.42px;
+        position: absolute;
+        left: calc(50% - 100px);
+        top: calc(50% - 0px);
+        transform-origin: 0 0;
+        transform: rotate(-45deg) scale(1, 1);
+        filter: blur(7.5px);
+        transition: background 0.5s ease;
+    }
+    .black-frame {
+        background: var(--TC-Default2);
+        border-radius: 20px;
+        width: 129.33px;
+        height: 129.33px;
+        position: absolute;
+        left: calc(50% - 91.45px);
+        top: calc(50% - 0px);
+        transform-origin: 0 0;
+        transform: rotate(-45deg) scale(1, 1);
+    }
+    .seek-slider {
+        -webkit-appearance: none;
+        appearance: none;
+        border-radius: 1px;
+        background: var(--TC-Default);
+        width: 69.45px;
+        height: 2px;
+        position: absolute;
+        left: 66px;
+        top: 52px;
+        overflow: visible;
+        transition: background 0.5s ease;
+    }
+    .seek-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        background: var(--TC-Default);
+        border-radius: 50%;
+        width: 8px;
+        height: 8px;
+        transition: background 0.5s ease;
+    }
+    .playtime {
+        color: var(--TC-Default); /* Changed to #dedede */
+        text-align: left;
+        font-family: "Inria Sans", sans-serif; 
+        font-size: 9.461531639099121px;
+        font-weight: 400;
+        position: absolute;
+        left: calc(50% - 9px);
+        top: calc(50% - 66px);
+        width: 18px;
+        height: 9px;
+        transition: color 0.5s ease;
+    }
+    .play, .previous, .next, .pause {
+    position: absolute;
+    overflow: visible;
+    cursor: pointer;
+    transition: filter 0.5s ease;
+    --shadow-opacity: 0.75; /* Adjust this value for shadow opacity */
+    --shadow-color: var(--TC-Default);
+    --webkit-filter: drop-shadow(0 0 5px var(--shadow-color));
+    filter: drop-shadow(0 0 5px var(--shadow-color));
+}
+
+    .play, .previous, .next, .pause, .headphones path {
+        fill:var(--TC-Default);
+}
+
+
+    .play, .pause {
+        width: 13.79px;
+        height: 15.76px;
+        left: calc(50% - 6.67px);
+        top: calc(50% - -54.57px);
+    }
+
+    .pause {
+      display: none;
+    }
+
+    .previous {
+        width: 14.44px;
+        height: 17.78px;
+        left: calc(50% - 71px);
+        top: calc(50% - 8.89px);
+    }
+    .next {
+        width: 14.44px;
+        height: 17.78px;
+        left: calc(50% - -55.56px);
+        top: calc(50% - 8.89px);
+    }
+    .music-image, .headphones {
+        background-position: center;
+        background-size: 100%;
+        border-radius: 10px;
+        width: 55px;
+        height: 52.25px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%); /* Center the image */
+        object-fit: contain;
+        background-color: transparent; /* Ensure no solid background color */
+    }
+
+    .music-image{
+      border: 2px solid var(--TC-Default);
+    }
+
+    .music-image{
+      display: none;
+    }
+  </style>  
+</head>
+<body>
+  <div class="music-player">
+    <div class="back-light"></div>
+    <div class="black-frame"></div>
+    <div class="playtime">0:00</div>
+    <svg class="play" width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.0665 6.60923L2.22906 0.202215C1.34852 -0.318105 0 0.186821 0 1.47377V14.2847C0 15.4393 1.25308 16.1351 2.22906 15.5563L13.0665 9.15234C14.0333 8.58276 14.0363 7.17882 13.0665 6.60923Z" />
+  </svg>
+  <svg class="pause" width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 1.66667C0 0.746192 0.746192 0 1.66667 0C2.58714 0 3.33333 0.746192 3.33333 1.66667V16.1111C3.33333 17.0316 2.58714 17.7778 1.66667 17.7778C0.746192 17.7778 0 17.0316 0 16.1111V1.66667Z"/>
+    <path d="M11 1.66667C11 0.746192 11.7462 0 12.6667 0C13.5871 0 14.3333 0.746192 14.3333 1.66667V16.1111C14.3333 17.0316 13.5871 17.7778 12.6667 17.7778C11.7462 17.7778 11 17.0316 11 16.1111V1.66667Z"/>
+  </svg>
+    <div class="music-image"></div>
+    <svg class="headphones" width="55" height="53" viewBox="0 0 55 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M27.5 0C20.0758 0.144565 13.012 3.22789 7.85758 8.57382C2.70314 13.9198 -0.121177 21.0919 0.00398967 28.5175V41.25C0.00398967 43.4256 0.649035 45.5523 1.85756 47.3613C3.06608 49.1702 4.78379 50.5801 6.79349 51.4127C8.80318 52.2452 11.0146 52.4631 13.1481 52.0386C15.2816 51.6142 17.2413 50.5666 18.7794 49.0282C20.3176 47.4898 21.3651 45.5298 21.7895 43.396C22.2138 41.2622 21.996 39.0505 21.1636 37.0405C20.3312 35.0305 18.9215 33.3125 17.1128 32.1038C15.3041 30.8951 13.1777 30.25 11.0024 30.25C9.06404 30.2581 7.16393 30.7902 5.50319 31.79V28.5175C5.37773 22.5505 7.62259 16.7771 11.7458 12.4625C15.869 8.148 21.5343 5.64425 27.5 5.5C33.4657 5.64425 39.131 8.148 43.2542 12.4625C47.3774 16.7771 49.6223 22.5505 49.4968 28.5175V31.79C47.8361 30.7902 45.936 30.2581 43.9976 30.25C41.8223 30.25 39.6959 30.8951 37.8872 32.1038C36.0785 33.3125 34.6688 35.0305 33.8364 37.0405C33.004 39.0505 32.7862 41.2622 33.2105 43.396C33.6349 45.5298 34.6824 47.4898 36.2206 49.0282C37.7587 50.5666 39.7184 51.6142 41.8519 52.0386C43.9854 52.4631 46.1968 52.2452 48.2065 51.4127C50.2162 50.5801 51.9339 49.1702 53.1424 47.3613C54.351 45.5523 54.996 43.4256 54.996 41.25V28.5175C55.1212 21.0919 52.2969 13.9198 47.1424 8.57382C41.988 3.22789 34.9242 0.144565 27.5 0ZM11.0024 35.75C12.09 35.75 13.1532 36.0726 14.0576 36.6769C14.9619 37.2813 15.6668 38.1402 16.083 39.1452C16.4992 40.1502 16.6081 41.2561 16.3959 42.323C16.1837 43.3899 15.66 44.3699 14.8909 45.1391C14.1218 45.9083 13.142 46.4321 12.0752 46.6443C11.0085 46.8565 9.90279 46.7476 8.89794 46.3313C7.89309 45.9151 7.03424 45.2101 6.42998 44.3056C5.82571 43.4012 5.50319 42.3378 5.50319 41.25C5.50319 39.7913 6.08257 38.3924 7.11387 37.3609C8.14517 36.3295 9.54392 35.75 11.0024 35.75ZM43.9976 46.75C42.91 46.75 41.8468 46.4274 40.9424 45.8231C40.0381 45.2187 39.3332 44.3598 38.917 43.3548C38.5008 42.3498 38.3919 41.2439 38.6041 40.177C38.8163 39.1101 39.34 38.1301 40.1091 37.3609C40.8782 36.5917 41.858 36.0679 42.9248 35.8557C43.9915 35.6435 45.0972 35.7524 46.1021 36.1687C47.1069 36.5849 47.9658 37.2899 48.57 38.1944C49.1743 39.0988 49.4968 40.1622 49.4968 41.25C49.4968 42.7087 48.9174 44.1076 47.8861 45.1391C46.8548 46.1705 45.4561 46.75 43.9976 46.75Z" fill="#dedede"/>
+    </svg>
+    <svg class="previous" width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1.37795 7.83147L12.2154 1.42444C13.0959 0.904124 14.4445 1.40905 14.4445 2.696V15.507C14.4445 16.6615 13.1914 17.3573 12.2154 16.7785L1.37795 10.3746C0.411203 9.80499 0.408125 8.40105 1.37795 7.83147Z" />
+      <path d="M3.33337 1.77778C3.33337 0.857306 2.58718 0.111115 1.66671 0.111115C0.746233 0.111115 4.1008e-05 0.857307 4.1008e-05 1.77778V16.2222C4.1008e-05 17.1427 0.746233 17.8889 1.66671 17.8889C2.58718 17.8889 3.33337 17.1427 3.33337 16.2222V1.77778Z" />
+  </svg>
+  <svg class="next" width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M13.622 7.83147L2.78461 1.42444C1.90406 0.904124 0.555542 1.40905 0.555542 2.696V15.507C0.555542 16.6615 1.80862 17.3573 2.78461 16.7785L13.622 10.3746C14.5888 9.80499 14.5919 8.40105 13.622 7.83147Z" />
+    <path d="M11.6666 1.77778C11.6666 0.857306 12.4128 0.111115 13.3333 0.111115C14.2538 0.111115 15 0.857307 15 1.77778V16.2222C15 17.1427 14.2538 17.8889 13.3333 17.8889C12.4128 17.8889 11.6666 17.1427 11.6666 16.2222V1.77778Z" />
+</svg>
+    <input type="range" class="seek-slider" min="0" max="100" value="0">
+    <div id="youtube-player"></div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vibrant@4.0.0/dist/vibrant.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    let player;
+    const playButton = document.querySelector('.play');
+    const previousButton = document.querySelector('.previous');
+    const nextButton = document.querySelector('.next');
+    const seekSlider = document.querySelector('.seek-slider');
+    const playtime = document.querySelector('.playtime');
+    const musicImage = document.querySelector('.music-image');
+    const headphones = document.querySelector('.headphones');
+    const pauseButton = document.querySelector('.pause');
+
+    let choice = 1; // Set to 1 for playlist or 2 for video
+
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('youtube-player', {
+    height: '0',
+    width: '0',
+    events: {
+      'onReady': onPlayerReady,
+      'onStateChange': onPlayerStateChange
+    }
+  });
+}
+
+function onPlayerReady(event) {
+  if (choice === 1) {
+    // Load playlist if choice is 1
+    const playlistId = 'OLAK5uy_lgSJEp2ubw96JD7QRdd1b7kDu0y4HIySo'; // Use actual YouTube playlist ID
+    player.loadPlaylist({ list: playlistId, listType: 'playlist' });
+  } else if (choice === 2) {
+    // Load video if choice is 2
+    const videoId = 'Gqdv_-BMlJs';
+    player.loadVideoById(videoId);
+  }
+  setInterval(updatePlayTime, 500);
+
+}
+
+// Event listener for state changes
+function onPlayerStateChange(event) {
+  if (event.data === YT.PlayerState.ENDED) {
+    if (choice === 2) {
+      player.seekTo(0);
+      player.playVideo();
+    }
+  }
+}
+
+function updatePlayTime() {
+  const currentTime = player.getCurrentTime();
+  const duration = player.getDuration();
+  playtime.textContent = formatTime(currentTime);
+  seekSlider.value = (duration > 0) ? (currentTime / duration) * 100 : 0; // Prevent division by zero
+}
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = Math.floor(seconds % 60);
+      return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+    }
+
+function changeThemeColortoTheme() {
+  document.documentElement.style.setProperty('--TC-Default', getComputedStyle(document.documentElement).getPropertyValue('--TC-Theme').trim());
+}
+
+function changeThemeColortoDefault() {
+  document.documentElement.style.setProperty('--TC-Default', '#dedede');
+}
+
+function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.PLAYING) {
+        musicImage.style.display = 'block';
+        const videoId = player.getVideoData().video_id; // Get the current video ID
+        const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`; // Construct the thumbnail URL
+        musicImage.style.backgroundImage = `url('${thumbnailUrl}')`; // Set the background image to the thumbnail URL
+        musicImage.style.filter = "saturate(0) brightness(100%)";// MONOCHROME image
+        musicImage.style.backgroundSize = '180%';
+        headphones.style.display = 'none';
+        playButton.style.display = 'none';
+        pauseButton.style.display = 'block';
+        changeThemeColortoTheme();
+      } else if (event.data === YT.PlayerState.PAUSED) {
+        musicImage.style.display = 'none';
+        playButton.style.display = 'block';
+        pauseButton.style.display = 'none';
+        headphones.style.display = 'block';
+        changeThemeColortoDefault();
+      }
+    }
+
+    // Event listener for play button click
+    playButton.addEventListener('click', () => {
+      if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+        player.pauseVideo(); // Pause the video
+      } else {
+        player.playVideo(); // Play the video
+      }
+    });
+
+    pauseButton.addEventListener('click', () => {
+      if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+        player.pauseVideo(); // Pause the video
+      } else {
+        player.playVideo(); // Play the video
+      }
+    });
+
+    // Event listener for next button click
+    nextButton.addEventListener('click', () => {
+      player.nextVideo(); // Play the next video in the playlist
+    });
+
+    // Event listener for previous button click
+    previousButton.addEventListener('click', () => {
+      player.previousVideo(); // Play the previous video in the playlist
+      player.seekTo(0);
+    });
+
+    seekSlider.addEventListener('input', (e) => {
+      const seekTo = player.getDuration() * (e.target.value / 100);
+      player.seekTo(seekTo, true);
+      changeThemeColortoTheme();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>clock</title>
+</head>
+<style>
+    html, body {
+        background-color: transparent;
+        margin: 0;
+        padding: 0;
+    }
+    .watch,
+    .watch * {
+        box-sizing: border-box;
+    }
+    .watch {
+        position: relative;
+        width: 152px;
+        height: 152px;
+        margin: 50px auto;
+    }
+    .bg {
+        background: #000000;
+        border-radius: 50%;
+        width: 152px;
+        height: 152px;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .watch-hands {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    .sec-hand {
+        display: none;
+        background: #dedede;
+        border-radius: 250px;
+        width: 2px;
+        height: 60px;
+        position: absolute;
+        left: calc(50% - 1px);
+        bottom: 50%;
+        transform-origin: 50% 100%;
+    }
+    .min-hand {
+        background: var(--dark-3, #6c696e);
+        border-radius: 250px;
+        width: 6px;
+        height: 64px;
+        position: absolute;
+        left: calc(50%); /* Adjusted for correct centering */
+        bottom: 58%;
+        z-index: 2;
+        transform-origin: 50% 100%;
+    }
+    .hour-hand {
+        background: white;
+        border-radius: 10px;
+        width: 16px;
+        height: 52px;
+        position: absolute;
+        left: calc(50% - 8px); /* Adjusted for correct centering */
+        bottom: 50%;
+        z-index: 1;
+        transform-origin: 50% 100%;
+    }
+</style>
+<body>
+    <div class="watch">
+        <div class="bg"></div>
+        <div class="watch-hands">
+            <div class="sec-hand"></div>
+            <div class="min-hand"></div>
+            <div class="hour-hand"></div>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const secondHand = document.querySelector('.sec-hand');
+            const minuteHand = document.querySelector('.min-hand');
+            const hourHand = document.querySelector('.hour-hand');
+
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+            const hours = now.getHours() % 12;
+
+            const secondDegrees = (seconds / 60) * 360;
+            const minuteDegrees = ((minutes + seconds / 60) / 60) * 360;
+            const hourDegrees = ((hours + minutes / 60) / 12) * 360;
+
+            secondHand.style.transform = `rotate(${secondDegrees}deg)`;
+            minuteHand.style.transform = `rotate(${minuteDegrees}deg)`;
+            hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock(); // Initial call to avoid delay
+    </script>
+</body>
+</html>

@@ -55,7 +55,7 @@ html, body {
     transform: translate(-50%, -50%);
     width: 25%;
     height: 15%;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.25s ease-in-out;
     background-color: black;
     z-index: 0;
     border-radius: 0;
@@ -65,10 +65,10 @@ html, body {
     font-family: "Courier New", monospace;
     color: white;
     background-color: transparent;
-    height: 35%;
+    height: 32%;
     width: 25%;
     position: fixed;
-    top: 57.6%;
+    top: 56.5%;
     left: 51.3%;
     transform: translate(-50%, -50%);
     border-radius: 0;
@@ -184,6 +184,26 @@ html, body {
   z-index: 5;
   width: 120px;
   height: 70px;
+}
+
+#music-player {
+  position: absolute;
+  width: 40%;
+  height:40%;
+  z-index: 5;
+  right: 0;
+  top: 65%;
+  transform: translate(0%, -50%);
+}
+
+#clock {
+  position: absolute;
+  width: 40%;
+  height:40%;
+  z-index: 5;
+  right: 0;
+  top: 35%;
+  transform: translate(0%, -50%);
 }
 
 .rectangular-drawer {
