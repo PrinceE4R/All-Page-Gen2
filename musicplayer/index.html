@@ -136,9 +136,27 @@
         position: absolute;
         left: 50%;
         top: 50%;
+        z-index: 1;
         transform: translate(-50%, -50%); /* Center the image */
         object-fit: contain;
         background-color: transparent; /* Ensure no solid background color */
+    }
+
+    .id {
+        color: var(--TC-Default);
+        text-align: center;
+        font-family: "Inria Sans", sans-serif; 
+        font-size: 5px;
+        font-weight: 400;
+        width: 55px;
+        height: 52.25px;
+        position: absolute;
+        left: 50%;
+        top: calc(50% + 2px);
+        display: none;
+        z-index: 2;
+        transform: translate(-50%, -50%);
+        transition: color 0.5s ease;
     }
 
     .music-image{
@@ -154,6 +172,7 @@
   <div class="music-player">
     <div class="back-light"></div>
     <div class="black-frame"></div>
+    <div type="text" class="id"></div>
     <div class="playtime">0:00</div>
     <svg class="play" width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M13.0665 6.60923L2.22906 0.202215C1.34852 -0.318105 0 0.186821 0 1.47377V14.2847C0 15.4393 1.25308 16.1351 2.22906 15.5563L13.0665 9.15234C14.0333 8.58276 14.0363 7.17882 13.0665 6.60923Z" />
@@ -190,6 +209,7 @@
     const musicImage = document.querySelector('.music-image');
     const headphones = document.querySelector('.headphones');
     const pauseButton = document.querySelector('.pause');
+    const videoIdDisplay = document.querySelector('.id');
 
     let choice = 1; // Set to 1 for playlist or 2 for video
 
@@ -197,6 +217,7 @@ function onYouTubeIframeAPIReady() {
   player = new YT.Player('youtube-player', {
     height: '0',
     width: '0',
+    autoplay: '0',
     events: {
       'onReady': onPlayerReady,
       'onStateChange': onPlayerStateChange
@@ -207,7 +228,8 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
   if (choice === 1) {
     // Load playlist if choice is 1
-    const playlistId = 'OLAK5uy_lgSJEp2ubw96JD7QRdd1b7kDu0y4HIySo'; // Use actual YouTube playlist ID
+    //const playlistId = 'OLAK5uy_lgSJEp2ubw96JD7QRdd1b7kDu0y4HIySo';
+    const playlistId = 'RDATgima';
     player.loadPlaylist({ list: playlistId, listType: 'playlist' });
   } else if (choice === 2) {
     // Load video if choice is 2
@@ -223,6 +245,7 @@ function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.ENDED) {
     if (choice === 2) {
       player.seekTo(0);
+      player.playVideo();
     }
   }
 }
@@ -259,12 +282,15 @@ function onPlayerStateChange(event) {
         headphones.style.display = 'none';
         playButton.style.display = 'none';
         pauseButton.style.display = 'block';
+        videoIdDisplay.textContent = videoId;
+        videoIdDisplay.style.display = 'block';
         changeThemeColortoTheme();
       } else if (event.data === YT.PlayerState.PAUSED) {
         musicImage.style.display = 'none';
         playButton.style.display = 'block';
         pauseButton.style.display = 'none';
         headphones.style.display = 'block';
+        videoIdDisplay.style.display = 'none';
         changeThemeColortoDefault();
       }
     }
